@@ -1,3 +1,4 @@
+//: [Previous](@previous)
 import Foundation
 //: # Helpful Code Snippets
 //: ## Integer Extensions

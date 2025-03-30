@@ -1,4 +1,3 @@
-//: [Previous](@previous)
 import Foundation
 //:# Helpful Tools for LeetCode Problems
 /*:
