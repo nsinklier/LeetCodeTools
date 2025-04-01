@@ -126,5 +126,22 @@ print(hasEven) // false
  - Check if any subarray meets a condition
  - Find if a string contains a certain type of character
  */
+/*:
+ -------------------------------------------------------------------
+ ## Dictionary[key, default:] (Accesses the value with the given key, uses default if empty)
+ _Use case:_ Appending to existing dictionary values, or creating a new entry if a key does not exist.
+*/
+var map = [Character: [Int]]()
+let charArray = Array("hello how are you")
+for (index, char) in charArray.enumerated() {
+    map[char, default: []].append(index)
+}
+print(map)
+/*:
+ ✔ LeetCode Example:
+ - Finding most commonly used words
+ - Binary Tree Vertical Order Traversal
+ */
+
 
 //: [Next](@next)
