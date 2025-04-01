@@ -50,4 +50,82 @@ extension Array {
         self = prepended
     }
 }
+/*:
+ --------------------------------------------------------------
+ ## Binary Tree
+ */
+class TreeNode {
+    let val: Int
+    let left: TreeNode?
+    let right: TreeNode?
+    init(val: Int, left: TreeNode?, right: TreeNode?) {
+        self.val = val
+        self.left = left
+        self.right = right
+    }
+}
+/*:
+ --------------------------------------------------------------
+ ## BFS Binary Tree Traversal (Level Order Traversal)
+ */
+func bfs(_ root: TreeNode?) -> [Int] {
+    guard let root else { return [] }
+    
+    var queue: [TreeNode] = [root]
+    var result: [Int] = []
+    
+    while !queue.isEmpty {
+        let node = queue.removeFirst() // Dequeue the front element
+        result.append(node.val) // Process node
+        
+        if let left = node.left {
+            queue.append(left) // Enqueue left child
+        }
+        if let right = node.right {
+            queue.append(right) // Enqueue right child
+        }
+    }
+    
+    return result
+}
+/*:
+ --------------------------------------------------------------
+ ## BFS Binary Tree Traversal (Vertical Order Traversal)
+ When solving Binary Tree Vertical Order Traversal, you track the column index along with each node. This ensures nodes are grouped by vertical column.
+
+ Key Changes for Vertical Order BFS:
+ - Use a queue of (node, column index) instead of just nodes.
+ - Keep a dictionary columnTable[column] to store values for each column.
+ - Track minColumn and maxColumn to sort the final result.
+ */
+func verticalOrder(_ root: TreeNode?) -> [[Int]] {
+    guard let root else { return [] }
+    
+    var columnTable = [Int: [Int]]() // Dictionary to store nodes by column
+    var queue: [(TreeNode, Int)] = [(root, 0)] // BFS queue (node, column index)
+    var minColumn = 0, maxColumn = 0
+    
+    while !queue.isEmpty {
+        let (node, column) = queue.removeFirst() // Dequeue
+        
+        columnTable[column, default: []].append(node.val) // Store value in column
+        
+        // Update min/max column indices
+        minColumn = min(minColumn, column)
+        maxColumn = max(maxColumn, column)
+        
+        // Enqueue children with column shifts
+        if let left = node.left {
+            queue.append((left, column - 1))
+        }
+        if let right = node.right {
+            queue.append((right, column + 1))
+        }
+    }
+    
+    // Collect results in order from minColumn to maxColumn
+    return (minColumn...maxColumn).compactMap { columnTable[$0] }
+}
+
+
 //: [Next](@next)
