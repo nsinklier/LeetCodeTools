@@ -142,6 +142,20 @@ print(map)
  - Finding most commonly used words
  - Binary Tree Vertical Order Traversal
  */
-
+/*:
+ -------------------------------------------------------------------
+ ## prefixSum (Accesses the value with the given key, uses default if empty)
+ _Use case:_ Quickly compute sum of any subarray in O(1) after O(n) prep.
+*/
+let givenNums = [1, 2, 3, 4]
+let prefix = givenNums.reduce(into: [0]) { $0.append($0.last! + $1) }
+print(prefix) // [0, 1, 3, 6, 10]
+let sum_1_to_3 = prefix[3] - prefix[1] // 5 (2 + 3)
+/*:
+ ✔ LeetCode Example:
+ - Continuous Subarray Sum
+ - Subarray Sums Divisible by K
+ - Range Sum Query
+ */
 
 //: [Next](@next)

@@ -126,6 +126,4 @@ func verticalOrder(_ root: TreeNode?) -> [[Int]] {
     // Collect results in order from minColumn to maxColumn
     return (minColumn...maxColumn).compactMap { columnTable[$0] }
 }
-
-
 //: [Next](@next)
