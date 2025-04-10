@@ -104,4 +104,18 @@ class Solution560 {
         return count
     }
 }
+
+private func gridValue(_ col: Int, _ row: Int) -> Int {
+    if 0...2 ~= col && 0...2 ~= row { return 0 }
+    if 3...5 ~= col && 0...2 ~= row { return 1 }
+    if 6...8 ~= col && 0...2 ~= row { return 2 }
+    if 0...2 ~= col && 3...5 ~= row { return 3 }
+    if 3...5 ~= col && 3...5 ~= row { return 4 }
+    if 6...8 ~= col && 3...5 ~= row { return 5 }
+    if 0...2 ~= col && 6...8 ~= row { return 6 }
+    if 3...5 ~= col && 6...8 ~= row { return 7 }
+    if 6...8 ~= col && 6...8 ~= row { return 8 }
+    
+    return -1
+}
 //: [Next](@next)
