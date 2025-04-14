@@ -103,7 +103,7 @@ class Solution36 {
 - __Input:__ nums = [1,1,1,2,2,3], k = 2
 - __Output:__ [1,2]
 */
-class Solution {
+class Solution347 {
     func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
         // map frequency
         var frequencyMap = [Int: Int]()
