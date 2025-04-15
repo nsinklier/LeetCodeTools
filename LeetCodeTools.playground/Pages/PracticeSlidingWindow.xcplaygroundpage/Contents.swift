@@ -64,4 +64,53 @@ class Solution3 {
         return maxLength
     }
 }
+/*:
+ -------------------------------------------------------------------
+ ## [567. Permutation in String](https://leetcode.com/problems/permutation-in-string)
+ Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+ In other words, return true if one of s1's permutations is the substring of s2.
+ 
+ ### Example:
+ - __Input:__ s1 = "ab", s2 = "eidbaooo"
+ - __Output:__ true
+ - __Explanation:__ s2 contains one permutation of s1 ("ba").
+ */
+class Solution {
+    func checkInclusion(_ s1: String, _ s2: String) -> Bool {
+        let needCount = s1.count
+        let haveCount = s2.count
+        guard needCount <= haveCount else { return false }
+
+        // create map of what we need
+        var need = [Character: Int]()
+        for char in s1 { need[char, default: 0] += 1 }
+
+        // create array of s2 to traverse
+        let chars = Array(s2)
+        var window = [Character: Int]()
+        
+        for i in 0..<haveCount {
+            // slide the window to the next value
+            window[chars[i], default: 0] += 1
+
+            // remove the left end of the windows values when it's too big
+            if i >= needCount {
+                let indexToRemove = i - needCount
+                let leftEnd = chars[indexToRemove]
+                let freq = window[leftEnd] ?? 1
+                if freq == 1 {
+                    window[leftEnd] = nil
+                } else {
+                    window[leftEnd] = freq - 1
+                }
+            }
+
+            // compare windows
+            if window == need { return true }
+        }
+
+        // never found need in window
+        return false
+    }
+}
 //: [Next](@next)
