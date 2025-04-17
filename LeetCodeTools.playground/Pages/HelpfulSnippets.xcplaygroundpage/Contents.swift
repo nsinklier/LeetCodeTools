@@ -126,4 +126,86 @@ func verticalOrder(_ root: TreeNode?) -> [[Int]] {
     // Collect results in order from minColumn to maxColumn
     return (minColumn...maxColumn).compactMap { columnTable[$0] }
 }
+/*:
+ --------------------------------------------------------------
+ ## MinHeap
+ Provides access to the smallest value in a list in O(log(n)) time.
+ */
+struct Heap<T> {
+    var elements: [T]
+    let priorityFunction: (T, T) -> Bool
+
+    init(elements: [T] = [], priorityFunction: @escaping (T, T) -> Bool) {
+        self.elements = elements
+        self.priorityFunction = priorityFunction
+
+        if !elements.isEmpty {
+            for i in stride(from: elements.count / 2 - 1, through: 0, by: -1) {
+                siftDown(from: i)
+            }
+        }
+    }
+
+    var isEmpty: Bool { return elements.isEmpty }
+    var count: Int { return elements.count }
+
+    func peek() -> T? {
+        return elements.first
+    }
+
+    mutating func insert(_ value: T) {
+        elements.append(value)
+        siftUp(from: elements.count - 1)
+    }
+
+    mutating func remove() -> T? {
+        guard !isEmpty else { return nil }
+
+        elements.swapAt(0, count - 1)
+        let item = elements.removeLast()
+        siftDown(from: 0)
+
+        return item
+    }
+
+    private mutating func siftUp(from index: Int) {
+        var child = index
+        var parent = self.parent(of: child)
+
+        while child > 0 && priorityFunction(elements[child], elements[parent]) {
+            elements.swapAt(child, parent)
+            child = parent
+            parent = self.parent(of: child)
+        }
+    }
+
+    private mutating func siftDown(from index: Int) {
+        var parent = index
+
+        while true {
+            let left = self.leftChild(of: parent)
+            let right = left + 1
+            var candidate = parent
+
+            if left < count && priorityFunction(elements[left], elements[candidate]) {
+                candidate = left
+            }
+            if right < count && priorityFunction(elements[right], elements[candidate]) {
+                candidate = right
+            }
+            if candidate == parent { return }
+
+            elements.swapAt(parent, candidate)
+            parent = candidate
+        }
+    }
+
+    private func parent(of index: Int) -> Int {
+        return (index - 1) / 2
+    }
+
+    private func leftChild(of index: Int) -> Int {
+        return 2 * index + 1
+    }
+}
 //: [Next](@next)

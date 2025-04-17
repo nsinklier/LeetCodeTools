@@ -157,5 +157,4 @@ let sum_1_to_3 = prefix[3] - prefix[1] // 5 (2 + 3)
  - Subarray Sums Divisible by K
  - Range Sum Query
  */
-
 //: [Next](@next)
