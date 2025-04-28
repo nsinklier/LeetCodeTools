@@ -64,4 +64,32 @@ class Solution129 {
 extension TreeNode {
     var isLeaf: Bool { left == nil && right == nil }
 }
+/*:
+ -------------------------------------------------------------------
+ ## [270. Closest Binary Search Tree Value](https://leetcode.com/problems/closest-binary-search-tree-value)
+ Given the root of a binary search tree and a target value, return the value in the BST that is closest to the target.
+ If there are multiple answers, print the smallest.
+ 
+ ### Example 1:
+ ![tree](closestTree.jpg)
+ - __Input:__ root = [4,2,5,1,3], target = 3.714286
+ - __Output:__ 4
+ * __Constraints:__
+    - The number of nodes in the tree is in the range [1, 104].
+    - 0 <= Node.val <= 109
+    - -109 <= target <= 109
+ */
+class Solution270 {
+    func closestValue(_ root: TreeNode?, _ target: Double) -> Int {
+        guard let root = root else { return Int.max }
+
+        let current = root.val
+        let leftClosest = closestValue(root.left, target)
+        let rightClosest = closestValue(root.right, target)
+
+        let candidates = [current, leftClosest, rightClosest]
+        
+        return candidates.min(by: { abs(Double($0) - target) < abs(Double($1) - target) })!
+    }
+}
 //: [Next](@next)
